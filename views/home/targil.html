@@ -1,0 +1,61 @@
+<div class="targilWrapper">
+    <div class="sidebar">
+
+        <div class="details">
+            <h3>{{ title }}</h3>
+            <h4>{{ greeting }}</h4>
+        </div>
+
+        <ul class="bg-bubble">
+            <li></li>
+            <li></li>
+        </ul>
+
+    </div>
+
+    <div class="view">
+        <h1>{{ targil_title }}</h1>
+        <button ng-show="{{ showButton }}" ng-click="go('/home/1')">Let's Start</button>
+        <h3 ng-show="{{ !showButton }}">{{ targil_subtitle }}</h3>
+        <h4 ng-show="{{ !showButton }}">{{ description1 }}</h4>
+        <h4 ng-show="{{ !showButton }}">{{ description2 }} <b>{{ values }}</b></h4>
+        <div ng-show="{{ !showButton && showTargil }}">
+
+            <div>
+                <h5>The target:</h5>
+                <div class="target">
+                    <div class="flex-container">
+                        <div class="flex-item flex-item-{{$index+1}}" ng-repeat="i in getNumber(items) track by $index">
+                            <span>{{$index+1}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h5>Playground:</h5>
+            <div class="editorWrapper">
+
+                <div id="css" class="codeWrapper">
+                    <pre id="before">{{ element }} {
+  display: flex; </pre>
+                    <textarea id="code" autofocus="" style="height: 24px;"></textarea>
+                    <pre id="after">
+}
+                    </pre>
+                </div>
+
+                <div class="result">
+                    <div class="flex-container" ng-class="success ? 'success' : 'notsuccess'">
+                    <div class="flex-item flex-item-{{$index+1}}" ng-repeat="i in getNumber(items) track by $index">
+                        <span>{{$index+1}}</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttonNextWrapper" ng-show="{{ !showButton && showTargil }}">
+            <input id="next" ng-click="goNext()" type="button" value="Next" class="peter-river-flat-button">
+        </div>
+    </div>
+</div>
