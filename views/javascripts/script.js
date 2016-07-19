@@ -35,7 +35,7 @@ scotchApp.controller('loginController', function ($rootScope, $scope, $routePara
 
     $('form').fadeOut(500);
     $('.wrapper').addClass('form-success');
-    if ($rootScope.username.indexOf('script') !== -1) {
+    if ($scope.username.indexOf('script') !== -1) {
       alert("Kishta!");
       $location.path("www.dontmesswithme.com");
       return;
