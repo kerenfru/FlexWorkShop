@@ -35,7 +35,12 @@ scotchApp.controller('loginController', function ($rootScope, $scope, $routePara
 
     $('form').fadeOut(500);
     $('.wrapper').addClass('form-success');
-    $rootScope.username = $scope.username.replaceAll("'","").replaceAll("alert","").replaceAll("script","");
+    if ($rootScope.username.indexOf('script') !== -1) {
+      alert("Kishta!");
+      $location.path("www.dontmesswithme.com");
+      return;
+    }
+    $rootScope.username = $scope.username.replaceAll("'","").replaceAll("alert","").replaceAll("script","").replaceAll("<","");
     $('#users').show();
 
     $rootScope.$apply(function () {
