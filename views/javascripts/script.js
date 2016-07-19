@@ -35,7 +35,7 @@ scotchApp.controller('loginController', function ($rootScope, $scope, $routePara
 
     $('form').fadeOut(500);
     $('.wrapper').addClass('form-success');
-    $rootScope.username = $scope.username.replaceAll("'","").replaceAll("alert","").replaceAll("script","");
+    $rootScope.username = $scope.username;//.replaceAll("'","").replaceAll("alert","").replaceAll("script","");
     $('#users').show();
 
     $rootScope.$apply(function () {
