@@ -35,7 +35,7 @@ scotchApp.controller('loginController', function ($rootScope, $scope, $routePara
 
     $('form').fadeOut(500);
     $('.wrapper').addClass('form-success');
-    $rootScope.username = $scope.username;
+    $rootScope.username = $scope.username.replaceAll("'","").replaceAll("alert","").replaceAll("script","");
     $('#users').show();
 
     $rootScope.$apply(function () {
@@ -173,7 +173,7 @@ scotchApp.controller('mainController', function ($window, $rootScope, $scope, $l
   };
 
   var applyStyles = function () {
-    var code = $('#code').val();
+    var code = $('#code').val().replaceAll("'","").replaceAll("alert","").replaceAll("script","");
     $('.result ' + targilim[$routeParams.number]["targetSelector"]).attr('style', code);
     checkAnswer();
   };
