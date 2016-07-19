@@ -77,7 +77,7 @@ var targilim = {
     "targetCss": "align-items:flex-end;",
     "result": "align-items:flex-end",
     "targetSelector": ".flex-container",
-    "injectCssOnFlexItem" : ".flex-item {height:auto !important;}",
+    "injectCssOnFlexItem" : ".flex-item {height:auto !important;min-height: 80px;}",
     "items" : 5
   },
   "8": {

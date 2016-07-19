@@ -6,16 +6,12 @@
             <h4>{{ greeting }}</h4>
         </div>
 
-        <ul class="bg-bubble">
-            <li></li>
-            <li></li>
-        </ul>
-
     </div>
 
     <div class="view">
+        <span class="byMe">by kfruchter</span>
         <h1>{{ targil_title }}</h1>
-        <button ng-show="{{ showButton }}" ng-click="go('/home/1')">Let's Start</button>
+        <button ng-show="{{ showButton }}" ng-click="go('/home/1')" class="startButton animated bounceIn">Let's Start</button>
         <h3 ng-show="{{ !showButton }}">{{ targil_subtitle }}</h3>
         <h4 ng-show="{{ !showButton }}">{{ description1 }}</h4>
         <h4 ng-show="{{ !showButton }}">{{ description2 }} <b>{{ values }}</b></h4>
@@ -55,7 +51,7 @@
             </div>
         </div>
         <div class="buttonNextWrapper" ng-show="{{ !showButton && showTargil }}">
-            <input id="next" ng-click="goNext()" type="button" value="Next" class="peter-river-flat-button">
+            <input id="next" ng-click="goNext()" type="button" value="Next" class="peter-river-flat-button animated infinite wobble">
         </div>
     </div>
 </div>

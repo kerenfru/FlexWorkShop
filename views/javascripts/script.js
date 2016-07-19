@@ -28,6 +28,7 @@ scotchApp.controller('loginController', function ($rootScope, $scope, $routePara
   $scope.title = $routeParams.number;
   $scope.message = 'Everyone come and see how good I look!';
   $scope.content = "";
+  sessionStorage.setItem('correctTargilim', "");
 
   $("#login-button").click(function (event) {
     event.preventDefault();
@@ -68,6 +69,7 @@ scotchApp.controller('mainController', function ($window, $rootScope, $scope, $l
   }
 
   $rootScope.success = false;
+  $rootScope.correctTargilim = (sessionStorage.getItem('correctTargilim')) ? JSON.parse(sessionStorage.getItem('correctTargilim')) : [];
 
   if ($routeParams.number && $routeParams.number == 18) {
     $rootScope.showTargil = false;
@@ -77,7 +79,7 @@ scotchApp.controller('mainController', function ($window, $rootScope, $scope, $l
     $rootScope.targil_subtitle = "";
     $rootScope.description1 = "";
     $rootScope.description2 = "";
-    $rootScope.values = "Your score is " + Math.round(($rootScope.numOfSuccess*100) / 17) + "% :)"
+    $rootScope.values = "Your score is " + Math.round(($rootScope.correctTargilim.length*100) / Object.keys(targilim).length) + "% :)"
   }
   else if ($routeParams.number) {
     $rootScope.showTargil = true;
@@ -111,18 +113,22 @@ scotchApp.controller('mainController', function ($window, $rootScope, $scope, $l
 
   if (!socket) {
     socket = io.connect();
-    socket.emit("join", currentUser);
+    socket.emit("join", currentUser, $rootScope.correctTargilim.length);
   }
+
+  if ($rootScope.correctTargilim  != []) { // refresg is done. load score from storage.
+    socket.emit("success", $rootScope.correctTargilim.length);
+  }
+
 
   socket.on("update-people", function (people) {
     $("#people").empty();
     $.each(people, function (clientid, userObj) {
-      if (Object.keys(userObj["exercises"]).length === 0) {
-        $('#people').append("<li id='" + clientid.substr(2) + "'>" + userObj.name + "</li>");
+      if (parseInt(userObj["exercises"]) === 0) {
+        $('#people').append("<li id='" + clientid.substr(2) + "' class='" + ((userObj.name === currentUser) ? "myuser" : "") + "'><i class=\"fa fa-user\" aria-hidden=\"true\"></i>  " + userObj.name + "</li>");
       }
       else {
-        $rootScope.numOfSuccess = Object.keys(userObj["exercises"]).length;
-        $('#people').append("<li id='" + clientid.substr(2) + "'>" + userObj.name + " <i class=\"fa fa-check\" aria-hidden=\"true\"></i>" + "  x" + Object.keys(userObj["exercises"]).length + "</li>");
+        $('#people').append("<li id='" + clientid.substr(2) + "' class='" + ((userObj.name === currentUser) ? "myuser" : "") + "'><i class=\"fa fa-user\" aria-hidden=\"true\"></i>  " + userObj.name + " <i class=\"fa fa-check\" aria-hidden=\"true\"></i>" + "  x" + userObj["exercises"] + "</li>");
       }
     });
   });
@@ -158,7 +164,11 @@ scotchApp.controller('mainController', function ($window, $rootScope, $scope, $l
       $rootScope.$apply(function () {
         $rootScope.success = true;
       });
-      socket.emit("success", currentUser, $routeParams.number);
+      if ($.inArray($routeParams.number, $rootScope.correctTargilim) === -1) {
+        $rootScope.correctTargilim.push($routeParams.number);
+      }
+      sessionStorage.setItem('correctTargilim', JSON.stringify($rootScope.correctTargilim));
+      socket.emit("success", $rootScope.correctTargilim.length);
     }
   };
 

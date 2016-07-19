@@ -37,20 +37,18 @@ var people = {};
 
 listener.on('connection', function(client) {
 
-  client.on("join", function(name){
+  client.on("join", function(name, exercises){
     console.log(name + " joined");
     people[client.id] = {};
     people[client.id]["name"] = name;
-    people[client.id]["exercises"] = {};
+    people[client.id]["exercises"] = exercises;
     client.emit("update", "You have connected to the server.");
     listener.sockets.emit("update", name + " has joined the server.");
     listener.sockets.emit("update-people", people);
   });
 
-  client.on("success", function(name, targil){
-    if (!people[client.id]["exercises"][targil]) {
-      people[client.id]["exercises"][targil] = true;
-    }
+  client.on("success", function(exercises){
+    people[client.id]["exercises"] = exercises;
     listener.sockets.emit("update-people", people);
   });
 
