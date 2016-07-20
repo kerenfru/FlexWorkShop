@@ -163,7 +163,7 @@ scotchApp.controller('mainController', function ($window, $rootScope, $scope, $l
 
 
   var checkAnswer = function () {
-    var code = $('#code').val().toLocaleLowerCase().split(":");
+    var code = $('#code').val().toLocaleLowerCase().replaceAll(";","").split(":");
     code = code[0].trim() + ":" + ((!code[1]) ? "" : code[1].trim());
     if (code == targilim[$routeParams.number]["result"]) {
       $rootScope.$apply(function () {
